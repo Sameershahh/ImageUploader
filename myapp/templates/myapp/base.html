@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            width: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .upload-box {
+            border: 2px dashed #ffffff;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .upload-box:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        input[type="submit"] {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            background: #ff7eb3;
+            color: white;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 126, 179, 0.5);
+        }
+        input[type="submit"]:hover {
+            background: #ff5283;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+    <script>
+        function triggerUpload() {
+            document.getElementById('fileInput').click();
+        }
+    </script>
+</head>
+<body>
+    <div class='container'>
+        <h1>Upload Image</h1>
+        <form action='' method='post' enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="upload-box" onclick="triggerUpload()">Click to Upload</div>
+            <input id="fileInput" type="file" name="image" accept="image/*">
+            <input type="submit" value="Upload">
+        </form>
+        <div class="gallery">
+            {% for x in img %}
+                <img src="{{x.image.url}}" alt="Uploaded Image">
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
